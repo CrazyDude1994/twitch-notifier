@@ -9,6 +9,11 @@ ICON_URL = "http://www.reelnreel.com/wp-content/uploads/2014/05/0f3b7b62-1a8c-4c
 
 class TwitchStream:
 
+    '''
+    Twitch Stream class
+    Stores information about single stream
+    '''
+
     def __init__(self, stream_name):
         self.stream_name = stream_name
         self.online = False
@@ -17,6 +22,11 @@ class TwitchStream:
         self.avatar = ""
 
 class TwitchNotify:
+
+    '''
+    Twitch notifier main class
+    Check streams states. Sending notifications to user.
+    '''
 
     def __init__(self, stream_names):
         self.streams = [TwitchStream(stream) for stream in stream_names]
@@ -103,5 +113,6 @@ class TwitchNotify:
                 format(stream.stream_name, stream.title),
                 stream.avatar or ICON_URL, True, None, "http://twitch.tv/{0}".format(stream.stream_name))
 
+#Start the notifier
 if __name__ == "__main__":
-    TwitchNotify(["starladder1", "etozhemad", "dreadztv", "c_a_k_e", "lirik", "sing_sing", "crazydude1994"])
+    TwitchNotify([]) #Uses list of stream names as input
