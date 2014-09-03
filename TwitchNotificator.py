@@ -4,7 +4,7 @@ from time import sleep
 from gntp import notifier
 
 TWITCH_API_URL = "https://api.twitch.tv/kraken"
-SLEEP_TIME = 60
+SLEEP_TIME = 60 * 5
 ICON_URL = "http://www.reelnreel.com/wp-content/uploads/2014/05/0f3b7b62-1a8c-4c54-b5a2-836186d376dd.png"
 
 class TwitchStream:
@@ -76,14 +76,14 @@ class TwitchNotify:
         if newState == True:
             print "Stream just went online!"
             if stream.game:
-                self.notifier.notify("Stream online", "{0} is online playing {1}".format(stream.stream_name, stream.game),
-                                     "Title: {1}\rLeft click on notification to watch stream!".
-                                     format(stream.stream_name, stream.title),
+                self.notifier.notify("Stream online", "{0} is online".format(stream.stream_name),
+                                     "Game: {0}\rTitle: {1}\rLeft click on notification to watch stream!".
+                                     format(stream.game, stream.title),
                                      stream.avatar or ICON_URL, True, None, "http://twitch.tv/{0}".format(stream.stream_name))
             else:
                 self.notifier.notify("Stream online", "{0} is online".format(stream.stream_name),
-                                     "Title: {1}\rLeft click on notification to watch stream!".
-                                     format(stream.stream_name, stream.title),
+                                     "Title: {0}\rLeft click on notification to watch stream!".
+                                     format(stream.title),
                                      stream.avatar or ICON_URL, True, None, "http://twitch.tv/{0}".format(stream.stream_name))
         else:
             print "Stream just went offline"
@@ -93,9 +93,9 @@ class TwitchNotify:
     def onStreamChangedInfo(self, newGame, newTitle, stream):
         print "Stream changed info"
         if stream.game:
-            self.notifier.notify("Info changed", "{0} is now playing {1}".format(stream.stream_name, stream.game),
-                            "Title: {1}\rLeft click on notification to watch stream!".
-                            format(stream.stream_name, stream.title),
+            self.notifier.notify("Info changed", "{0} changed info".format(stream.stream_name),
+                            "Game: {0}\rTitle: {1}\rLeft click on notification to watch stream!".
+                            format(stream.game, stream.title),
                             stream.avatar or ICON_URL, True, None, "http://twitch.tv/{0}".format(stream.stream_name))
         else:
             self.notifier.notify("Info changed", "{0} is not playing anything".format(stream.stream_name),
