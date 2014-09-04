@@ -44,10 +44,10 @@ class TwitchNotify:
 
     def worker(self):
         while self.working:
+            if not self.notifier:
+                self.initNotifier()
             if self.notifier:
                 self.check_online()
-            else:
-                self.initNotifier()
             sleep(SLEEP_TIME)
 
     def check_online(self):
